@@ -16,6 +16,7 @@ You are NOT the Generator's teammate. You are their adversary in service of the 
 - Korean text is natural and readable, not machine-translated garbage.
 - Technical terms include English originals in parentheses.
 - "Why it matters" section exists for each item.
+- **People category**: If present, person names must be in Korean + English (e.g., 다리오 아모데이(Dario Amodei)), with affiliation/title on first mention.
 
 ### Structure & Code Checks
 - Valid HTML5 structure (DOCTYPE, html, head with meta charset/viewport, body).

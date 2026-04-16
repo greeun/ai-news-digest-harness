@@ -1,5 +1,6 @@
 ---
 name: ai-news-digest-harness
+version: 1.1.0
 description: |
   일일 AI 뉴스 다이제스트를 Planner → Generator → Evaluator 하네스 패턴으로 생성.
   Anthropic "Harness Design for Long-Running Application Development" (Prithvi Rajasekaran, 2026) 원칙 적용.
@@ -55,7 +56,7 @@ filename = ai-news-digest-{YYYYMMDD-HHmmss}.html   # 예: ai-news-digest-2026041
 ```
 Agent({
   description: "AI News Planner",
-  prompt: [references/planner-prompt.md 내용] + "\n\n사용자 요청: {user_input}\n작업 디렉토리: {working_dir}\n오늘 날짜: {today}",
+  prompt: [references/planner-prompt.md 내용] + "\n\n사용자 요청: {user_input}\n작업 디렉토리: {working_dir}\n오늘 날짜: {today}\n추가 카테고리: {사용자가 지정한 카테고리가 있으면 전달, 없으면 '없음'}",
   mode: "auto"
 })
 ```
@@ -195,3 +196,23 @@ Files (single source of truth):
 | 같은 이슈가 반복 | Generator가 critique.md를 제대로 안 읽음 | critique.md의 blocking issues를 명시적으로 인용하도록 강제 |
 | 한국어가 번역투 | 영어 소스 직역 | 루브릭에서 Summary Quality 2x 가중 + 구체적 한국어 품질 체크 |
 | 디자인이 밋밋함 | CSS 최소화 경향 | 루브릭에서 Visual Design 2x 가중 + 구체적 디자인 체크리스트 |
+
+## Changelog
+
+### v1.1.0 (2026-04-17)
+- **Korea 카테고리 추가**: 한국 기업/정부/학계 AI 소식 전용 필터
+- **People 카테고리 추가**: AI 주요 인사/뉴스메이커 (CEO, 연구자, 정책 관계자)
+- **사용자 지정 카테고리**: 실행 시 추가 카테고리 요청 가능 (예: "헬스케어 AI도 넣어줘")
+- **기본 수량 15-25개**: 사용자 지정 가능 (7-12에서 상향)
+- **글로벌+국내 균형**: 해외 60-70% / 국내 30-40% 목표 비율 명시
+- **SNS/커뮤니티 탐색**: X, Reddit, Hacker News, LinkedIn 검색 쿼리 추가
+- **4-Tier 출처 우선순위**: 공식 → 미디어 → SNS → 블로그
+- **원문 V2 교훈 반영**: Evaluator 튜닝 반복, 점진적 단순화, 스타일 자석 방지, 비선형 품질, Evaluator 경계 개념, Generator 전략적 피봇
+- **Pretendard 폰트 CDN 수정**: Google Fonts → jsdelivr
+- **datetime 파일명**: `ai-news-digest-{YYYYMMDD-HHmmss}.html`
+
+### v1.0.0 (2026-04-16)
+- 초기 릴리스: Planner → Generator → Evaluator 하네스 패턴
+- 9개 카테고리, 7-12개 뉴스 아이템
+- Self-contained HTML with dark mode, category filter
+- Anthropic harness article 6원칙 적용
